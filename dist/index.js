@@ -86,7 +86,7 @@ function run() {
                     destDir = path.join(process.env.GITHUB_WORKSPACE, emArgs.actionsCacheFolder);
                 }
                 const emsdkArchive = yield tc.downloadTool("https://github.com/emscripten-core/emsdk/archive/main.zip", destDir);
-                emsdkFolder = yield tc.extractZip(emsdkArchive);
+                emsdkFolder = yield tc.extractZip(emsdkArchive, destDir);
             }
             else {
                 foundInCache = true;
@@ -124,7 +124,7 @@ function run() {
             };
             yield exec.exec(`${emsdk} construct_env`, [], { listeners: { stdline: envListener, errline: envListener } });
             if (emArgs.actionsCacheFolder && !foundInCache && process.env.GITHUB_WORKSPACE) {
-                fs.mkdirSync(path.join(process.env.GITHUB_WORKSPACE, emArgs.actionsCacheFolder), { recursive: true });
+                yield io.mkdirP(path.join(process.env.GITHUB_WORKSPACE, emArgs.actionsCacheFolder));
                 yield io.cp(path.join(emsdkFolder, 'emsdk-main'), path.join(process.env.GITHUB_WORKSPACE, emArgs.actionsCacheFolder), { recursive: true });
                 yield cache.saveCache([emArgs.actionsCacheFolder], cacheKey);
             }

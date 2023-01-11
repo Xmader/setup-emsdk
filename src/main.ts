@@ -52,7 +52,7 @@ async function run() {
       }
       
       const emsdkArchive = await tc.downloadTool("https://github.com/emscripten-core/emsdk/archive/main.zip", destDir);
-      emsdkFolder = await tc.extractZip(emsdkArchive);
+      emsdkFolder = await tc.extractZip(emsdkArchive, destDir);
     } else {
       foundInCache = true;
     }
@@ -100,7 +100,7 @@ async function run() {
     await exec.exec(`${emsdk} construct_env`, [], {listeners: {stdline: envListener, errline: envListener}})
 
     if (emArgs.actionsCacheFolder && !foundInCache && process.env.GITHUB_WORKSPACE) {
-      fs.mkdirSync(path.join(process.env.GITHUB_WORKSPACE, emArgs.actionsCacheFolder), { recursive: true });
+      await io.mkdirP(path.join(process.env.GITHUB_WORKSPACE, emArgs.actionsCacheFolder))
       await io.cp(path.join(emsdkFolder, 'emsdk-main'), path.join(process.env.GITHUB_WORKSPACE, emArgs.actionsCacheFolder), { recursive: true })
       await cache.saveCache([emArgs.actionsCacheFolder], cacheKey);
     }

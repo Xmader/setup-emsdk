@@ -123,11 +123,11 @@ function run() {
                 }
             };
             yield exec.exec(`${emsdk} construct_env`, [], { listeners: { stdline: envListener, errline: envListener } });
-            if (emArgs.actionsCacheFolder && process.env.GITHUB_WORKSPACE) {
-                // await io.mkdirP(path.join(process.env.GITHUB_WORKSPACE, emArgs.actionsCacheFolder))
-                // await io.cp(path.join(emsdkFolder, 'emsdk-main'), path.join(process.env.GITHUB_WORKSPACE, emArgs.actionsCacheFolder), { recursive: true })
-                yield cache.saveCache([emArgs.actionsCacheFolder], cacheKey);
-            }
+            // if (emArgs.actionsCacheFolder && process.env.GITHUB_WORKSPACE) {
+            //   // await io.mkdirP(path.join(process.env.GITHUB_WORKSPACE, emArgs.actionsCacheFolder))
+            //   // await io.cp(path.join(emsdkFolder, 'emsdk-main'), path.join(process.env.GITHUB_WORKSPACE, emArgs.actionsCacheFolder), { recursive: true })
+            //   await cache.saveCache([emArgs.actionsCacheFolder], cacheKey);
+            // }
         }
         catch (error) {
             core.setFailed(error.message);

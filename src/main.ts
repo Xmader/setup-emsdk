@@ -51,7 +51,7 @@ async function run() {
         destDir = path.join(process.env.GITHUB_WORKSPACE, emArgs.actionsCacheFolder);
       }
       
-      const emsdkArchive = await tc.downloadTool("https://github.com/emscripten-core/emsdk/archive/main.zip", destDir);
+      const emsdkArchive = await tc.downloadTool("https://github.com/emscripten-core/emsdk/archive/main.zip");
       emsdkFolder = await tc.extractZip(emsdkArchive, destDir);
     } else {
       foundInCache = true;

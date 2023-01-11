@@ -85,7 +85,7 @@ function run() {
                 if (emArgs.actionsCacheFolder && process.env.GITHUB_WORKSPACE) {
                     destDir = path.join(process.env.GITHUB_WORKSPACE, emArgs.actionsCacheFolder);
                 }
-                const emsdkArchive = yield tc.downloadTool("https://github.com/emscripten-core/emsdk/archive/main.zip", destDir);
+                const emsdkArchive = yield tc.downloadTool("https://github.com/emscripten-core/emsdk/archive/main.zip");
                 emsdkFolder = yield tc.extractZip(emsdkArchive, destDir);
             }
             else {
